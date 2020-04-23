@@ -3,33 +3,46 @@
 #Blog:https://edges5352.github.io
 #Email:bluebreeze191@gamil.com
 #GitHub:EdgeS5352 (Solaris Eco)
+#coding:UTF-8
+
+
+#some path
+export output="/dev/null"
+export import_list="$PREFIX/etc/coraph"
+
+
+#some color
+red="\033[31m"
+green="\033[32m"
+suffix="\033[0m"
 
 
 #import some argument
-
-#some color
-export red="\033[31m"
-export green="\033[32m"
-export suffix="\033[0m"
-
+if [ -f $import_list ]; then
+  export ubuntu=`sed -n "3,3p" $PREFIX/etc/coraph.conf`
+  export arch=`sed -n "6,6p" $PREFIX/etc/coraph.conf`
+  export fedora=`sed -n "9,9p" $PREFIX/etc/coraph.conf`
+  export centos=`sed -n "12,12p" $PREFIX/etc/coraph.conf`
+  export debian=`sed -n "15,15p" $PREFIX/etc/coraph.conf`
+  export kali=`sed -n "18,18p" $PREFIX/etc/coraph.conf`
+else
+  echo "${red} $import_list does not exist! ${suffix}"
+  exit "2"
 
 #some tips
+export version="0.6"
 export download_tip="echo -e ${green}Downloading Rootfs,this may take some time...${suffix}"
 export void_error="echo -e ${red}Please input a effective argument!${suffix}"
 export unpack_tip="echo -e ${green}Unpacking,please waiting...${suffix}"
 
 
 #some links
-export ubuntu_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/ubuntu/bionic/arm64/default/20200331_07%3A53/rootfs.tar.xz -O ~/ubuntu.tar.xz"
-export arch_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/archlinux/current/arm64/default/20200421_05%3A10/rootfs.tar.xz -O ~/arch.tar.xz"
-export fedora_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/fedora/31/arm64/default/20200420_20%3A33/rootfs.tar.xz -O ~/fedora.tar.xz"
-export centos_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/centos/8/arm64/default/20200421_07%3A08/rootfs.tar.xz -O ~/centos.tar.xz"
-export debian_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/debian/stretch/arm64/default/20200421_05%3A24/rootfs.tar.xz -O ~/debian.tar.xz"
-export kali_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/kali/current/arm64/default/20200421_17%3A14/rootfs.tar.xz -O ~/kali.tar.xz"
-
-
-#other
-export output="/dev/null"
+export ubuntu_link="wget ${ubuntu} -O ~/ubuntu.tar.xz"
+export arch_link="wget ${arch} -O ~/arch.tar.xz"
+export fedora_link="wget ${fedora} -O ~/fedora.tar.xz"
+export centos_link="wget ${centos} -O ~/centos.tar.xz"
+export debian_link="wget ${debian} -O ~/debian.tar.xz"
+export kali_link="wget ${kali} -O ~/kali.tar.xz"
 
 
 #do you have proot?
@@ -71,8 +84,7 @@ case $1 in
   ${void_error}
   exit 1
   esac
-    mkdir $PREFIX/etc/.cora 1>"$output" 2>&1
-  fi
+  mkdir $PREFIX/etc/.cora 1>"$output" 2>&1
   mv $2.tar.xz $PREFIX/etc/.cora/
   cd $PREFIX/etc/.cora/
   ${unpack_tip}
