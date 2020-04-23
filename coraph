@@ -1,0 +1,85 @@
+#!/bin/bash -e
+#(C)Code by Solaris Eco 2020
+#Blog:https://edges5352.github.io
+#Email:bluebreeze191@gamil.com
+#GitHub:EdgeS5352 (Solaris Eco)
+
+
+#import some argument
+
+#some color
+export red="\033[31m"
+export green="\033[32m"
+export suffix="\033[0m"
+
+
+#some tips
+export download_tip="echo -e ${green}Downloading Rootfs,this may take some time...${suffix}"
+export void_error="echo -e ${red}Please input a effective argument!${suffix}"
+export unpack_tip="echo -e ${green}Unpacking,please waiting...${suffix}"
+
+
+#some links
+export ubuntu_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/ubuntu/bionic/arm64/default/20200331_07%3A53/rootfs.tar.xz -O ~/ubuntu.tar.xz"
+export arch_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/archlinux/current/arm64/default/20200421_05%3A10/rootfs.tar.xz -O ~/arch.tar.xz"
+export fedora_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/fedora/31/arm64/default/20200420_20%3A33/rootfs.tar.xz -O ~/fedora.tar.xz"
+export centos_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/centos/8/arm64/default/20200421_07%3A08/rootfs.tar.xz -O ~/centos.tar.xz"
+export debian_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/debian/stretch/arm64/default/20200421_05%3A24/rootfs.tar.xz -O ~/debian.tar.xz"
+export kali_link="wget https://mirrors.tuna.tsinghua.edu.cn/lxc-images/images/kali/current/arm64/default/20200421_17%3A14/rootfs.tar.xz -O ~/kali.tar.xz"
+
+
+#other
+export output="/dev/null"
+
+
+#do you have proot?
+proot=`which proot`
+if [ x"$proot" = x ]
+  echo "${green} Installing proot... ${suffix}"
+  apt install proot -y 1>"$output" 2>&1
+
+
+#start determine
+case $1 in
+"deploy")
+  case $2 in
+  "ubuntu")
+  ${download_tip}
+  ${ubuntu_link}
+  ;;  
+  "arch")
+  ${download_tip}
+  ${arch_link}
+  ;;
+  "fedora")
+  ${download_tip}
+  ${fedora_link}
+  ;;
+  "centos")
+  ${download_tip}
+  ${centos_link}
+  ;;
+  "debian")
+  ${download_tip}
+  ${debian_link}
+  ;;
+  "kali")
+  ${download_tip}
+  ${kali_link}
+  ;;
+  "*")
+  ${void_error}
+  exit 1
+  esac
+    mkdir $PREFIX/etc/.cora 1>"$output" 2>&1
+  fi
+  mv $2.tar.xz $PREFIX/etc/.cora/
+  cd $PREFIX/etc/.cora/
+  ${unpack_tip}
+  xz -d $2.tar.xz
+  tar -xvf $2.tar
+  rm $PREFIX/etc/.cora/$2.tar
+  cd $PREFIX/bin
+  touch $2
+  
+
