@@ -39,6 +39,8 @@ export download_tip="echo -e ${green}Downloading Rootfs,this may take some time.
 export void_error="echo -e ${red}Please input a effective argument!${suffix}"
 export unpack_tip="echo -e ${green}Unpacking,please waiting...${suffix}"
 export done_tip="echo -e ${green} Process done! ${suffix} "
+export introduce="echo Coraph is a useful tool which can help you to set up some  Linux Distribution in your Termux."
+
 
 #some links
 export ubuntu_link="wget ${ubuntu} -O ~/ubuntu.tar.xz"
@@ -59,12 +61,16 @@ fi
 
 function logo {
 clear
-echo -e "${yellow}         ____                      _                ${suffix}"
-echo -e "${yellow}        / ___|___  _ __ __ _ _ __ | |__             ${suffix}"
-echo -e "${yellow}       | |   / _ \|  __/ _  |  _ \|   _ \           ${suffix}"
-echo -e "${yellow}       | |__| (_) | | | (_| | |_) | | | |           ${suffix}"
-echo -e "${yellow}        \____\___/|_|  \__,_| .__/|_| |_|           ${suffix}"
-echo -e "${yellow}                            |_|          ${version} ${suffix}"
+echo -e "${yellow}                     ____                      _                ${suffix}"
+echo -e "${yellow}                    / ___|___  _ __ __ _ _ __ | |__             ${suffix}"
+echo -e "${yellow}                   | |   / _ \|  __/ _  |  _ \|   _ \           ${suffix}"
+echo -e "${yellow}                   | |__| (_) | | | (_| | |_) | | | |           ${suffix}"
+echo -e "${yellow}                    \____\___/|_|  \__,_| .__/|_| |_|           ${suffix}"
+echo -e "${yellow}                                        |_|          ${version} ${suffix}"
+echo ""
+echo "                   https://github.com/EdgeS5352/Coraph"
+echo ""
+echo ""
 }
 
 
@@ -76,8 +82,14 @@ if [ x"$proot" = x ]; then
 fi
 
 
-#start determine
-if [ $2 == "deploy" ]; then
+#haven't input
+if [ x"$1" == x ]; then
+  logo
+  ${introduce}
+
+
+#install a system
+elif [ $1 == "deploy" ]; then
   case $2 in
   "ubuntu")
   logo
@@ -141,7 +153,9 @@ if [ $2 == "deploy" ]; then
     setting="zh_CN.UTF-8"
   elif [ $lang == "en" ]; then
     setting="C.UTF-8"
-  
+  else
+    ${void_error}
+  fi 
 
   #Write script
   dir="~/.coraph/$2"
@@ -153,7 +167,7 @@ if [ $2 == "deploy" ]; then
 
 
 #remove a system
-if [ $1 == "remove" ]; then
+elif [ $1 == "remove" ]; then
   logo
   read -p "Are you sure you want to remove $2 (y/n)：" chose
   if [ $chose == "Y" -o $chose == "y" ]; then    
@@ -179,6 +193,19 @@ if [ $1 == "remove" ]; then
 
 #help info
 elif [ $1 == "help" ]; then
+  echo "Coraph          ${version}"
+  echo "Usage: coraph [command] [argument]"
+  echo ""
+  ${introduce}
+  echo ""
+  echo "Command:"
+  echo "deploy          to install a Linux distribution which you need"
+  echo "remove          delete a existing Linux distribution"
+  echo "update          get the latest version of Coraph"
+  echo "list            list all of rootfs which can be support"
+  echo "help            get some help"
 
 
-
+else
+echo "coming soon"
+fi
