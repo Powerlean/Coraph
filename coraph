@@ -7,8 +7,9 @@
 
 
 #some path
-export output="/dev/null"
-export import_list="$PREFIX/etc/coraph"
+export bin="$PREFIX/bin/"
+export output="/dev/null/"
+export import_list="$PREFIX/etc/coraph.conf"
 
 
 #some color
@@ -19,12 +20,12 @@ suffix="\033[0m"
 
 #import some argument
 if [ -f $import_list ]; then
-  export ubuntu=`sed -n "3,3p" $PREFIX/etc/coraph.conf`
-  export arch=`sed -n "6,6p" $PREFIX/etc/coraph.conf`
-  export fedora=`sed -n "9,9p" $PREFIX/etc/coraph.conf`
-  export centos=`sed -n "12,12p" $PREFIX/etc/coraph.conf`
-  export debian=`sed -n "15,15p" $PREFIX/etc/coraph.conf`
-  export kali=`sed -n "18,18p" $PREFIX/etc/coraph.conf`
+  export ubuntu=`sed -n "3,3p" $import_list`
+  export arch=`sed -n "6,6p" $import_list`
+  export fedora=`sed -n "9,9p" $import_list`
+  export centos=`sed -n "12,12p" $import_list`
+  export debian=`sed -n "15,15p" $import_list`
+  export kali=`sed -n "18,18p" $import_list`
 else
   echo "${red} $import_list does not exist! ${suffix}"
   exit "2"
@@ -50,7 +51,7 @@ proot=`which proot`
 if [ x"$proot" = x ]
   echo "${green} Installing proot... ${suffix}"
   apt install proot -y 1>"$output" 2>&1
-
+fi
 
 #start determine
 case $1 in
@@ -82,16 +83,46 @@ case $1 in
   ;;
   "*")
   ${void_error}
-  exit 1
+  exit "2"
   esac
-  mkdir $PREFIX/etc/.cora 1>"$output" 2>&1
-  mv $2.tar.xz $PREFIX/etc/.cora/
-  cd $PREFIX/etc/.cora/
+  mkdir ~/.coraph 1>"$output" 2>&1
+  mv $2.tar.xz ~/.coraph/
+  cd ~/.coraph/
   ${unpack_tip}
   xz -d $2.tar.xz
   tar -xvf $2.tar
-  rm $PREFIX/etc/.cora/$2.tar
+  echo "${green} Start to remove compression package..."
+  rm ~/.coraph/$2.tar
+  echo "${green} Write launch script in $bin$2 ${suffix}"
   cd $PREFIX/bin
   touch $2
-  
-
+  dir="~/.coraph/$2"
+  cat > $bin/$2 <<- EOM
+  #!/bin/bash -e
+  cd $(dirname $0)
+    unset LD_PRELOAD
+    command="proot"
+    command+=" --link2symlink"
+    command+=" -0"
+    command+=" -r $dir"
+    command+=" -b /dev"
+    command+=" -b /proc"
+    command+=" -b $dir/root:/dev/shm"
+    command+=" -b /sdcard"
+    command+=" -w /root"
+    command+=" /usr/bin/env -i"
+    command+=" HOME=/root"
+    command+=" PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games"
+    command+=" TERM=$TERM"
+    command+=" LANG=zh_CN.UTF-8"
+    command+=" /bin/bash --login"
+    com="$@"
+    if [ -z "$1" ];then
+      exec $command
+    else
+      $command -c "$com"
+    fi
+    EOM
+  chmod +x $bin$2
+  echo "${green} Process done,now you can launch $2 with command [$2] ${suffix}"
+  exit "0"
