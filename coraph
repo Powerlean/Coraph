@@ -68,10 +68,11 @@ echo -e "${yellow}                            |_|          ${version} ${suffix}"
 
 #do you have proot?
 proot=`which proot`
-if [ x"$proot" = x ]
+if [ x"$proot" = x ]; then
   echo "${green} Installing proot... ${suffix}"
   apt install proot -y 1>"$output" 2>&1
 fi
+
 
 #start determine
 case $1 in
@@ -131,42 +132,22 @@ case $1 in
   echo "${green} Write launch script in $bin$2 ${suffix}"
   cd $PREFIX/bin
   touch $2
-  
-
+  echo -e "${green} Chinese(zh_CN) ${suffix}"  
+  echo -e "${green} English(C) ${suffix}"
+  read -p "which is your language (cn/en)" lang
+  if [ $lang == "cn" ]; then
+    setting="zh_CN.UTF-8"
+  elif [ $lang == "en" ]; then
+    setting="C.UTF-8"
   #Write script
   dir="~/.coraph/$2"
-  cat > $bin$2 <<- EOM
-  #!/bin/bash -e
-  cd $(dirname $0)
-    unset LD_PRELOAD
-    command="proot"
-    command+=" --link2symlink"
-    command+=" -0"
-    command+=" -r $dir"
-    command+=" -b /dev"
-    command+=" -b /proc"
-    command+=" -b $dir/root:/dev/shm"
-    command+=" -b /sdcard"
-    command+=" -w /root"
-    command+=" /usr/bin/env -i"
-    command+=" HOME=/root"
-    command+=" PATH=/usr/local/sbin:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/games:/usr/local/games"
-    command+=" TERM=$TERM"
-    command+=" LANG=zh_CN.UTF-8"
-    command+=" /bin/bash --login"
-    com="$@"
-    if [ -z "$1" ];then
-      exec $command
-    else
-      $command -c "$com"
-    fi
-    EOM
+  
   chmod +x $bin$2
   ${done_tip}
   echo -e "${green} Now you can launch $2 with command [$2]. ${suffix}"
   exit "0"
-;;
-"remove")
+  ;;
+  "remove")
   logo
   read -p "Are you sure you want to remove $2 (y/n)：" chose
   if [ $chose == "Y" -o $chose == "y" ]; then    
