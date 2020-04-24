@@ -77,8 +77,7 @@ fi
 
 
 #start determine
-case $1 in
-"deploy")
+if [ $2 == "deploy" ]; then
   case $2 in
   "ubuntu")
   logo
@@ -142,15 +141,19 @@ case $1 in
     setting="zh_CN.UTF-8"
   elif [ $lang == "en" ]; then
     setting="C.UTF-8"
+  
+
   #Write script
   dir="~/.coraph/$2"
-  
+  echo -e "#! /bin/bash\nunset LD_PRELOAD\nproot --link2symlink -S ${dir} -b /sys -b /dev -b /proc -b ~/ -w /root /usr/bin/env -i HOME=/root LANG=${setting} PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin TERM=xterm-256color /bin/bash --login" > "$bin$2"
   chmod +x $bin$2
   ${done_tip}
   echo -e "${green} Now you can launch $2 with command [$2]. ${suffix}"
   exit "0"
-;;
-"remove")
+
+
+#remove a system
+if [ $1 == "remove" ]; then
   logo
   read -p "Are you sure you want to remove $2 (y/n)：" chose
   if [ $chose == "Y" -o $chose == "y" ]; then    
@@ -172,6 +175,10 @@ case $1 in
   else
     echo -e "${red} Command not found. ${suffix}"
   fi
-;;
-"help")
+
+
+#help info
+elif [ $1 == "help" ]; then
+
+
 
