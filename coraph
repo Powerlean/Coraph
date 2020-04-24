@@ -10,7 +10,7 @@
 export bin="$PREFIX/bin/"
 export output="/dev/null/"
 export import_list="$PREFIX/etc/coraph.conf"
-
+export base="~/coraph/"
 
 #some color
 red="\033[31m"
@@ -85,6 +85,9 @@ case $1 in
   ${void_error}
   exit "2"
   esac
+  
+
+  #Global setting
   mkdir ~/.coraph 1>"$output" 2>&1
   mv $2.tar.xz ~/.coraph/
   cd ~/.coraph/
@@ -96,8 +99,11 @@ case $1 in
   echo "${green} Write launch script in $bin$2 ${suffix}"
   cd $PREFIX/bin
   touch $2
+  
+
+  #Write script
   dir="~/.coraph/$2"
-  cat > $bin/$2 <<- EOM
+  cat > $bin$2 <<- EOM
   #!/bin/bash -e
   cd $(dirname $0)
     unset LD_PRELOAD
@@ -126,3 +132,17 @@ case $1 in
   chmod +x $bin$2
   echo "${green} Process done,now you can launch $2 with command [$2] ${suffix}"
   exit "0"
+;;
+"remove")
+  echo "${red} Start to remove $2... ${suffix}"
+  if [ x"$2" == x ]; then
+    ${void_error}
+    exit "2"
+  fi
+  if [ -f "$base$2" ]
+    rm -rf $base$2
+  else
+    echo "${red} You didn't install $2! ${suffix}"
+  fi
+  rm -rf $bin$2
+  
