@@ -43,12 +43,12 @@ export introduce="echo Coraph is a useful tool which can help you to set up some
 
 
 #some links
-export ubuntu_link="wget ${ubuntu} -O ~/ubuntu.tar.xz"
-export arch_link="wget ${arch} -O ~/arch.tar.xz"
-export fedora_link="wget ${fedora} -O ~/fedora.tar.xz"
-export centos_link="wget ${centos} -O ~/centos.tar.xz"
-export debian_link="wget ${debian} -O ~/debian.tar.xz"
-export kali_link="wget ${kali} -O ~/kali.tar.xz"
+export ubuntu_link="wget ${ubuntu} && mv rootfs.tar.xz ubuntu.tar.xz && mv ubuntu.tar.xz ~"
+export arch_link="wget ${arch} && mv rootfs.tar.xz arch.tar.xz && mv arch.tar.xz ~"
+export fedora_link="wget ${fedora} && mv rootfs.tar.xz fedora.tar.xz && mv fedora.tar.xz ~"
+export centos_link="wget ${centos} && mv rootfs.tar.xz centos.tar.xz && mv centos.tar.xz ~"
+export debian_link="wget ${debian} && mv rootfs.tar.xz debian.tar.xz && mv debian.tar.xz ~"
+export kali_link="wget ${kali} && mv rootfs.tar.xz kali.tar.xz && mv kali.tar.xz ~"
 
 
 #some function
