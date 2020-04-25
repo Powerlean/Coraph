@@ -82,7 +82,7 @@ if [ x"$proot" = x ]; then
 fi
 
 #move
-rename="mv rootfs.tar.xz ${2}.tar.xz && mv $2.tar.xz /data/data/com.termux/files/home"
+rename ="mv rootfs.tar.xz ${2}.tar.xz mv $2.tar.xz /data/data/com.termux/files/home"
 
 
 #haven't input
