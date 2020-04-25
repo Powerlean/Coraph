@@ -81,6 +81,7 @@ if [ x"$proot" = x ]; then
   apt install proot -y 1>"$output" 2>&1
 fi
 
+
 #move
 function rename { 
 mv rootfs.tar.xz ${2}.tar.xz 
@@ -133,15 +134,14 @@ elif [ $1 == "deploy" ]; then
   ${download_tip}
   ${kali_link}
   ;;
-  "*")
+  *)
   ${void_error}
   exit "2"
-  ;; 
   esac
   
 
   #Global setting
-  ${rename}
+  rename ${1} ${2}
   mkdir ~/.coraph 
   mv $2.tar.xz ~/.coraph/
   cd ~/.coraph/
@@ -214,5 +214,5 @@ elif [ $1 == "help" ]; then
 
 
 else
-echo "coming soon"
+${void_error}
 fi
