@@ -82,7 +82,7 @@ if [ x"$proot" = x ]; then
 fi
 
 #move
-rename="mv rootfs.tar.xz $2.tar.xz && mv $2.tar.xz ~"
+rename="mv rootfs.tar.xz ${2}.tar.xz && mv $2.tar.xz ~/"
 
 
 #haven't input
@@ -139,7 +139,7 @@ elif [ $1 == "deploy" ]; then
 
   #Global setting
   ${rename}
-  mkdir ~/.coraph 1>"$output" 2>&1
+  mkdir ~/.coraph 
   mv $2.tar.xz ~/.coraph/
   cd ~/.coraph/
   ${unpack_tip}
@@ -152,7 +152,7 @@ elif [ $1 == "deploy" ]; then
   touch $2
   echo -e "${green} Chinese(zh_CN) ${suffix}"  
   echo -e "${green} English(C) ${suffix}"
-  read -p "which is your language (cn/en)" lang
+  read -p "which is your language (cn/en)：" lang
   if [ $lang == "cn" ]; then
     setting="zh_CN.UTF-8"
   elif [ $lang == "en" ]; then
