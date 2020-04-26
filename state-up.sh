@@ -34,4 +34,3 @@ mv coraph.conf $PREFIX/etc
 chmod +x $PREFIX/bin/coraph
 echo -e "${green} Getting ready ${suffix}"
 "coraph"
-"coraph help"
