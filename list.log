@@ -1,0 +1,11 @@
+#!/bin/bash
+echo ""
+echo "       ┌────────┬────────┐      "
+echo "       │ Ubuntu │  Arch  │      "
+echo "       ├────────┼────────┤      "
+echo "       │  Kali  │ Fedora │      "
+echo "       ├────────┼────────┤      "
+echo "       │ Debian │ CentOS │      "
+echo "       └────────┴────────┘      "
+echo ""
+echo "Tip:I'm just support AARCH64 for now."
