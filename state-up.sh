@@ -30,9 +30,8 @@ wget "https://raw.githubusercontent.com/EdgeS5352/Coraph/master/coraph.conf"
 #start state
 echo -e "${green} Setting... ${suffix}"
 mv coraph $PREFIX/bin
-mv coraph $PREFIX/etc
+mv coraph.conf $PREFIX/etc
 chmod +x $PREFIX/bin/coraph
-echo -e "{green} Getting ready {suffix}"
-coraph
-coraph help
-rm state-up.sh
+echo -e "${green} Getting ready ${suffix}"
+"coraph"
+"coraph help"
