@@ -225,7 +225,8 @@ elif [ $1 == "list" -o $1 == "l" ]; then
 
 #get update
 elif [ $1 == "update" -o $1 == "u" ]; then
-  bash -c "$(curl -fsSL $update)"
+  echo -e "${green} Start to update... ${suffix}"
+  bash -c "$(curl -fsSL $update)" 1>"$output" 2>&1
 
 
 #error input
