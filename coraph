@@ -35,7 +35,7 @@ fi
 
 
 #some tips
-export version="v0.6"
+export version="v1.6"
 export download_tip="echo -e ${green}Downloading Rootfs,this may take some time...${suffix}"
 export void_error="echo -e ${red}Please input a effective argument!${suffix}"
 export unpack_tip="echo -e ${green}Unpacking,please waiting...${suffix}"
@@ -44,6 +44,7 @@ export introduce="echo Coraph is a useful tool which can help you to set up some
 
 
 #some links
+export update="https://raw.githubusercontent.com/EdgeS5352/Coraph/master/state-up.sh"
 export log="https://raw.githubusercontent.com/EdgeS5352/Coraph/master/list.log"
 export ubuntu_link="wget ${ubuntu}"
 export arch_link="wget ${arch}"
@@ -217,8 +218,13 @@ elif [ $1 == "help" -o $1 == "h" ]; then
 
 
 #list rootfs
-elif [ $1 == list -o $1 == l ]; then
+elif [ $1 == "list" -o $1 == "l" ]; then
   bash -c "$(curl -fsSL $log)"
+
+
+#get update
+elif [ $1 == "update" -o $1 == "u" ]; then
+  bash -c "$(curl -fsSL $update)"
 
 
 #error input

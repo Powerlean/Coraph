@@ -35,3 +35,4 @@ chmod +x $PREFIX/bin/coraph
 echo -e "{green} Getting ready {suffix}"
 coraph
 coraph help
+rm state-up.sh
