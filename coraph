@@ -74,6 +74,7 @@ echo ""
 echo "            https://github.com/EdgeS5352/Coraph"
 echo ""
 echo ""
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/EdgeS5352/Coraph/master/update.log)"
 }
 
 
