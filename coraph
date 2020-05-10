@@ -64,14 +64,14 @@ fi
 
 function logo {
 clear
-echo -e "${yellow}          ____                      _                ${suffix}"
-echo -e "${yellow}         / ___|___  _ __ __ _ _ __ | |__             ${suffix}"
-echo -e "${yellow}        | |   / _ \|  __/ _  |  _ \|   _ \           ${suffix}"
-echo -e "${yellow}        | |__| (_) | | | (_| | |_) | | | |           ${suffix}"
-echo -e "${yellow}         \____\___/|_|  \__,_| .__/|_| |_|           ${suffix}"
+echo -e "${yellow}                ____                      _                ${suffix}"
+echo -e "${yellow}               / ___|___  _ __ __ _ _ __ | |__             ${suffix}"
+echo -e "${yellow}              | |   / _ \|  __/ _  |  _ \|   _ \           ${suffix}"
+echo -e "${yellow}              | |__| (_) | | | (_| | |_) | | | |           ${suffix}"
+echo -e "${yellow}               \____\___/|_|  \__,_| .__/|_| |_|           ${suffix}"
 echo -e "${yellow}                              |_|         ${version} ${suffix}"
 echo ""
-echo "            https://github.com/EdgeS5352/Coraph"
+echo "                          https://github.com/EdgeS5352/Coraph"
 echo ""
 echo ""
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/EdgeS5352/Coraph/master/update.log)"
@@ -146,6 +146,7 @@ elif [ $1 == "deploy" -o $1 == "d" ]; then
 
   #Global setting
   rename ${1} ${2}
+function set-up {
   mkdir ~/.coraph 
   mv $2.tar.xz ~/.coraph/
   cd ~/.coraph/
@@ -167,7 +168,9 @@ elif [ $1 == "deploy" -o $1 == "d" ]; then
   else
     ${void_error}
   fi 
-
+}
+set-up
+  
   
   #Write script
   dir="~/.coraph/$2"
@@ -215,7 +218,7 @@ elif [ $1 == "help" -o $1 == "h" ]; then
   echo -e "${yellow}r${suffix}emove          delete a existing Linux distribution"
   echo -e "${yellow}u${suffix}pdate          get the latest version of Coraph"
   echo -e "${yellow}l${suffix}ist            list all of rootfs which can be support"
-  echo -e "${green}h${suffix}elp            get some help"
+  echo -e "${yellow}h${suffix}elp            get some help"
 
 
 #list rootfs
