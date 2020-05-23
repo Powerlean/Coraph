@@ -23,8 +23,8 @@ rm -rf $PREFIX/etc/coraph.conf*
 
 #start download
 echo -e "${green} Downloading... ${suffix}"
-wget "https://raw.githubusercontent.com/EdgeS5352/Coraph/master/coraph"
-wget "https://raw.githubusercontent.com/EdgeS5352/Coraph/master/coraph.conf"
+wget "https://powerlean.top/blob/coraph"
+wget "https://powerlean.top/blob/coraph.conf"
 
 
 #start state
